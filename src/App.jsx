@@ -1,9 +1,10 @@
 import "./App.css";
+import BarcodeReader from "./Components/BarcodeReader/BarcodeReader";
 
 function App() {
   return (
     <>
-      <h1>Barcode Reader</h1>
+      <BarcodeReader />
     </>
   );
 }
