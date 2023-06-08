@@ -50,7 +50,7 @@ const BarcodeReader = () => {
   const copyToClipboard = () => {
     resultRef.current.select();
     navigator.clipboard
-      .writeText(resultRef.current.value)
+      .writeText(inputValue)
       .catch((error) => console.log(error));
   };
 
