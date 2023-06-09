@@ -49,9 +49,11 @@ const BarcodeReader = () => {
 
   const copyToClipboard = () => {
     resultRef.current.select();
-    navigator.clipboard
-      .writeText(inputValue)
-      .catch((error) => console.log(error));
+    navigator.clipboard.writeText(inputValue).catch((error) => {
+      console.log(error);
+      console.log("Trying another way to copy to clipboard.");
+      document.execCommand("copy", true, null);
+    });
   };
 
   return (
