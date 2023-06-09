@@ -65,7 +65,7 @@ const BarcodeReader = () => {
           className="start-btn"
           onClick={!isStart ? readQR : stopReadQR}
         >
-          {!isStart ? <ImSearch style={{ color: "green" }} /> : <ImStop />}
+          {!isStart ? <ImSearch style={{ color: "#E8AA42" }} /> : <ImStop />}
         </button>
       </div>
 
@@ -80,7 +80,7 @@ const BarcodeReader = () => {
       />
 
       <button type="button" className="copy-btn" onClick={copyToClipboard}>
-        <FaCopy />
+        <FaCopy /> Copy
       </button>
     </div>
   );
