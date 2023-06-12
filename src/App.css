@@ -86,3 +86,18 @@ input:focus {
   padding: 10px;
   font-size: 1.2rem;
 }
+
+.social-share {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  row-gap: 10px;
+}
+
+.social-share-btns {
+  display: flex;
+  gap: 8px;
+}

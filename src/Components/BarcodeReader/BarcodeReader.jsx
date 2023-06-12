@@ -1,6 +1,13 @@
 import { useRef, useState } from "react";
 import { ImSearch, ImStop } from "react-icons/im";
 import { FaCopy } from "react-icons/fa";
+import {
+  FacebookShareButton,
+  TwitterShareButton,
+  WhatsappShareButton,
+} from "react-share";
+
+import { FacebookIcon, TwitterIcon, WhatsappIcon } from "react-share";
 
 const BarcodeReader = () => {
   const videoRef = useRef(null);
@@ -82,6 +89,30 @@ const BarcodeReader = () => {
       <button type="button" className="copy-btn" onClick={copyToClipboard}>
         <FaCopy /> Copy
       </button>
+      <div className="social-share">
+        <p>Share This With Your Friends</p>
+
+        <div className="social-share-btns">
+          <FacebookShareButton
+            quote="Read QR code with your phone - No installation required"
+            url="https://readqr.netlify.app"
+          >
+            <FacebookIcon size={32} round />
+          </FacebookShareButton>
+          <WhatsappShareButton
+            title="Read QR code with your phone - No installation required"
+            url="https://readqr.netlify.app"
+          >
+            <WhatsappIcon size={32} round />
+          </WhatsappShareButton>
+          <TwitterShareButton
+            title="Read QR code with your phone - No installation required"
+            url="https://readqr.netlify.app"
+          >
+            <TwitterIcon size={32} round />
+          </TwitterShareButton>
+        </div>
+      </div>
     </div>
   );
 };
