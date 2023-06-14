@@ -14,51 +14,67 @@ const BarcodeReader = () => {
   const resultRef = useRef(null);
   const [isStart, setIsStart] = useState(false);
   const [inputValue, setInputValue] = useState("https://readqr.netlify.app");
+  const [error, setError] = useState(true);
 
   const readQR = async () => {
     try {
-      // indicate QR reading process is in progress
-      setIsStart(true);
-
       //media source
       const src = await navigator.mediaDevices.getUserMedia({ video: true });
 
-      if (src) videoRef.current.srcObject = src;
+      if (src) {
+        // indicates QR reading process is in progress
+        setIsStart(true);
 
-      if (!window.BarcodeDetector) {
-        throw new Error("Device dosen't have Barcode reading capabilities");
+        //set device camera as video source
+        videoRef.current.srcObject = src;
       }
 
+      if (!window.BarcodeDetector) {
+        throw new ReferenceError();
+      }
+
+      //create a barcode detector
       const barcodeDetector = new BarcodeDetector({
         formats: ["qr_code"],
       });
 
+      //Finds data embedded in QR Code
       const showResult = setInterval(async () => {
         const result = await barcodeDetector.detect(videoRef.current);
         if (result.length > 0) {
           setInputValue(result[0].rawValue);
-          stopReadQR();
+          stopReadQR(showResult);
         }
       }, 1000);
     } catch (error) {
-      console.log(error.message);
+      let msg = "";
+      if (error instanceof DOMException) {
+        msg = "No access to device camera";
+      }
+      if (error instanceof ReferenceError) {
+        msg = "Device dosen't have Barcode reading capabilities";
+      }
+      alert(msg);
     }
   };
 
-  const stopReadQR = () => {
+  const stopReadQR = (intervalName) => {
+    if (!isStart) return;
     videoRef.current.srcObject.getTracks().forEach((track) => {
       track.stop();
 
       //indicate QR reading has stoped
       setIsStart(false);
+
+      //clear Interval
+      clearInterval(intervalName);
     });
   };
 
+  //copies result to clipboard
   const copyToClipboard = () => {
     resultRef.current.select();
     navigator.clipboard.writeText(inputValue).catch((error) => {
-      console.log(error);
-      console.log("Trying another way to copy to clipboard.");
       document.execCommand("copy", true, null);
     });
   };
