@@ -1,20 +1,19 @@
-import { useRef, useState } from "react";
-import { ImSearch, ImStop } from "react-icons/im";
-import { FaCopy } from "react-icons/fa";
+import { useRef, useState } from 'react';
+import { ImSearch, ImStop } from 'react-icons/im';
+import { FaCopy } from 'react-icons/fa';
 import {
   FacebookShareButton,
   TwitterShareButton,
   WhatsappShareButton,
-} from "react-share";
+} from 'react-share';
 
-import { FacebookIcon, TwitterIcon, WhatsappIcon } from "react-share";
+import { FacebookIcon, TwitterIcon, WhatsappIcon } from 'react-share';
 
 const BarcodeReader = () => {
   const videoRef = useRef(null);
   const resultRef = useRef(null);
   const [isStart, setIsStart] = useState(false);
-  const [inputValue, setInputValue] = useState("https://readqr.netlify.app");
-  const [error, setError] = useState(true);
+  const [inputValue, setInputValue] = useState('https://readqr.netlify.app');
 
   const readQR = async () => {
     try {
@@ -35,7 +34,7 @@ const BarcodeReader = () => {
 
       //create a barcode detector
       const barcodeDetector = new BarcodeDetector({
-        formats: ["qr_code"],
+        formats: ['qr_code'],
       });
 
       //Finds data embedded in QR Code
@@ -47,9 +46,9 @@ const BarcodeReader = () => {
         }
       }, 1000);
     } catch (error) {
-      let msg = "";
+      let msg = '';
       if (error instanceof DOMException) {
-        msg = "No access to device camera";
+        msg = 'No access to device camera';
       }
       if (error instanceof ReferenceError) {
         msg = "Device dosen't have Barcode reading capabilities";
@@ -75,7 +74,7 @@ const BarcodeReader = () => {
   const copyToClipboard = () => {
     resultRef.current.select();
     navigator.clipboard.writeText(inputValue).catch((error) => {
-      document.execCommand("copy", true, null);
+      document.execCommand('copy', true, null);
     });
   };
 
@@ -88,7 +87,7 @@ const BarcodeReader = () => {
           className="start-btn"
           onClick={!isStart ? readQR : stopReadQR}
         >
-          {!isStart ? <ImSearch style={{ color: "#E8AA42" }} /> : <ImStop />}
+          {!isStart ? <ImSearch style={{ color: '#E8AA42' }} /> : <ImStop />}
         </button>
       </div>
 
@@ -98,7 +97,7 @@ const BarcodeReader = () => {
         value={inputValue}
         readOnly={true}
         placeholder="Result will appear here.."
-        style={{ textAlign: "center" }}
+        style={{ textAlign: 'center' }}
         ref={resultRef}
       />
 
